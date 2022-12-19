@@ -2,7 +2,7 @@ import React from "react";
 import GridRowCell from "./GridRowCell/GridRowCell";
 import "./GridRow.css";
 
-const GridRow = ({ data, wordToGuess }) => {
+const GridRow = ({ data, wordToGuess, isFixed }) => {
   return (
     <div className={"grid-row"}>
       {Array(6)
@@ -12,12 +12,14 @@ const GridRow = ({ data, wordToGuess }) => {
             key={index}
             value={data[index]}
             status={
-              wordToGuess.charAt(index) === data[index]
-                ? "correct"
-                : data[index] !== "" && wordToGuess.includes(data[index])
-                ? "wrong-position"
-                : data[5] !== ""
-                ? "imcorrect"
+              isFixed
+                ? wordToGuess.charAt(index) === data[index]
+                  ? "correct"
+                  : data[index] !== "" && wordToGuess.includes(data[index])
+                  ? "wrong-position"
+                  : data[5] !== ""
+                  ? "imcorrect"
+                  : ""
                 : ""
             }
           />

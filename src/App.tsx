@@ -16,7 +16,8 @@ function App() {
           .map((_, index) => (
             <GridRow
               key={index}
-              data={gameState[index]}
+              data={gameState[index].data}
+              isFixed={gameState[index].fixed}
               wordToGuess={COREECT_WORD}
             />
           ))}
