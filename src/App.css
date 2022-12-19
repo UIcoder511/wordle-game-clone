@@ -1,3 +1,33 @@
+:root {
+  /* ------------------------------GENERAL -------------------------------- */
+  --gap: 12px;
+  /* ----------------------------- GRID-CELL ------------------------------ */
+  --cell-size: 80px;
+  /* --cell-shadow-color: #000000ee; */
+  --cell-shadow: 3px 5px 10px -3px #000000ee;
+  --imcomplete-bg: #ffffff;
+  --imcomplete-shadow: #9ebff1;
+  --imcorrect-bg: #ccc;
+  --imcorrect-shadow: #aaa;
+  --correct-bg: #b1fe0e;
+  --correct-shadow: #36b101;
+  --wrong-positon-bg: #fef572;
+  --wrong-positon-shadow: #ff6100;
+
+  /* -- */
+}
+
 .App {
-  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
 }
