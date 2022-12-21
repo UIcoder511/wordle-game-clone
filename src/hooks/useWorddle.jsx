@@ -3,60 +3,89 @@ import { flushSync } from "react-dom";
 
 const initState = [
   { data: ["", "", "", "", "", ""], fixed: false },
-  { data: ["", "A", "", "", "", ""], fixed: false },
-  { data: ["M", "", "", "", "", ""], fixed: false },
-  { data: ["B", "", "", "", "", ""], fixed: false },
-  { data: ["A", "B", "C", "M", "S", "A"], fixed: true },
-  { data: ["", "C", "", "", "", ""], fixed: false },
+  { data: ["", "", "", "", "", ""], fixed: false },
+  { data: ["", "", "", "", "", ""], fixed: false },
+  { data: ["", "", "", "", "", ""], fixed: false },
+  { data: ["", "", "", "", "", ""], fixed: false },
+  { data: ["", "", "", "", "", ""], fixed: false },
 ];
 
-const useWorddle = () => {
+const useWorddle = ({ correctWord }) => {
   const [gameState, setGameState] = useState(initState);
   const [currentRow, setCurrentRow] = useState(0);
   const [currentPosition, setCurrentPosition] = useState(0);
-  console.log(gameState);
+  const [isWon, setIsWon] = useState(false);
+  // console.log(gameState);
+
+  const handleEnter = () => {
+    const newState = JSON.parse(JSON.stringify(gameState));
+    newState[currentRow].fixed = true;
+    // flushSync(() => {
+    setCurrentPosition(0);
+    setCurrentRow((prev) => prev + 1);
+    setGameState(newState);
+    if (newState[currentRow].data.join("") === correctWord) {
+      setIsWon(true);
+    }
+    // });
+  };
+
+  const restartGame = () => {
+    // flushSync(() => {
+    setGameState(initState);
+    setCurrentRow(0);
+    setCurrentPosition(0);
+    // });
+  };
+
+  const handleKeys = (key) => {
+    // console.log(key);
+    const newState = JSON.parse(JSON.stringify(gameState));
+    newState[currentRow].data[currentPosition] = key.toUpperCase();
+    // flushSync(() => {
+    if (currentPosition !== 6) setCurrentPosition((prev) => prev + 1);
+    setGameState(newState);
+    // });
+  };
+
+  const handleBackslash = () => {
+    const newState = JSON.parse(JSON.stringify(gameState));
+    newState[currentRow].data[currentPosition - 1] = "";
+    // flushSync(() => {
+    if (currentPosition !== 0) setCurrentPosition((prev) => prev - 1);
+    setGameState(newState);
+  };
+
   useEffect(() => {
     const keydownHandler = (e) => {
-      console.log(e);
+      // console.log(e);
       if (
-        (e.keyCode >= 65 && e.keyCode <= 90) ||
-        (e.keyCode >= 97 && e.keyCode <= 122)
+        /^[A-Za-z]$/.test(e.key)
+        // (e.keyCode >= 65 && e.keyCode <= 90) ||
+        // (e.keyCode >= 97 && e.keyCode <= 122)
       ) {
-        console.log(e.key);
-        const newState = JSON.parse(JSON.stringify(gameState));
-        newState[currentRow].data[currentPosition] = e.key.toUpperCase();
-        flushSync(() => {
-          if (currentPosition !== 6) setCurrentPosition((prev) => prev + 1);
-          setGameState(newState);
-        });
+        handleKeys(e.key);
       } else if (e.keyCode === 8) {
-        const newState = JSON.parse(JSON.stringify(gameState));
-        newState[currentRow].data[currentPosition - 1] = "";
-        flushSync(() => {
-          if (currentPosition !== 0) setCurrentPosition((prev) => prev - 1);
-          setGameState(newState);
-        });
+        handleBackslash();
+        // });
       } else if (e.keyCode === 13) {
         if (currentPosition === 6) {
-          const newState = JSON.parse(JSON.stringify(gameState));
-          newState[currentRow].fixed = true;
-          flushSync(() => {
-            setCurrentPosition(0);
-            setCurrentRow((prev) => prev + 1);
-            setGameState(newState);
-          });
+          handleEnter();
         }
       }
     };
-
-    document.addEventListener("keydown", keydownHandler);
+    if (!isWon) document.addEventListener("keydown", keydownHandler);
     return () => {
-      document.removeEventListener("keydown", keydownHandler);
+      if (!isWon) document.removeEventListener("keydown", keydownHandler);
     };
-  }, [currentPosition]);
+  }, [currentPosition, currentRow]);
 
   return {
     gameState,
+    currentPosition,
+    handleEnter,
+    restartGame,
+    isWon,
   };
 };
 
