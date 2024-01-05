@@ -3,49 +3,58 @@ import React from "react";
 import "./App.css";
 import GridRow from "./components/GridRow/GridRow";
 import useWorddle from "./hooks/useWorddle";
+import Home from "./components/Home/Home";
+import Button from "./ui/Button/Button";
+import MenuCard from "ui/MenuCard/MenuCard";
+import Tutorial from "staticUI/Tutorial/Tutorial";
 
-const COREECT_WORD = "MIKASA"; // :)
+const CORRECT_WORD = "MIKASA"; // :)
 
 function App() {
   const {
+    level,
+    setLevel,
     gameState,
     currentPosition,
     handleEnter: guessTheWord,
     isWon,
-  } = useWorddle({ correctWord: COREECT_WORD });
+    canEnter,
+  } = useWorddle({ correctWord: CORRECT_WORD });
+
   return (
     <div className="App">
-      {/* <header>
-        <div>Worddle Game</div>
-        <div>Guess the anime character :)</div>
-      </header> */}
-      <div className="main-container">
-        {Array(6)
+      <Tutorial />
+      {/* {
+      // !isStarted ?<Home setIsStarted={setIsStarted}  />:
+      !gameState ?<Home setLevel={setLevel}  />:
+      <>
+       <div className="main-container">
+       {Array(6)
           .fill("")
           .map((_, index) => (
             <GridRow
               key={index}
-              data={gameState[index].data}
-              isFixed={gameState[index].fixed}
-              wordToGuess={COREECT_WORD}
+              data={gameState?.[index].data}
+              isFixed={gameState?.[index].isFixed}
+              wordToGuess={CORRECT_WORD}
+              level={level}
             />
           ))}
-        {/* <GridRow data={gameState[0]} />
-        <GridRow />
-        <GridRow />
-        <GridRow />
-        <GridRow />
-        <GridRow /> */}
+        
+      
       </div>
       <footer>
-        <button
-          disabled={currentPosition !== 6}
+        <Button
+          disabled={!canEnter}
           onClick={guessTheWord}
-          className="submit-btn"
+          btnType="try"
         >
           TRY IT
-        </button>
+        </Button>
       </footer>
+   
+      </>
+} */}
     </div>
   );
 }

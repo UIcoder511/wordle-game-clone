@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Patua+One&family=Ultra&display=swap');
+
+*,*::before,*::after{
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -15,4 +21,8 @@ code {
 #root {
   height: 100vh;
   width: 100vw;
+}
+
+.flex{
+  display: flex;
 }

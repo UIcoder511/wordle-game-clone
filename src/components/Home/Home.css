@@ -1,0 +1,62 @@
+.homescreen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.level-card{
+    margin: 10px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 300px;
+    width: auto;
+    outline: 2px solid #fff;
+    font-family: 'Ultra', serif;
+    font-weight: 400;
+    position: relative;
+}
+
+.number{
+    font-size: 4rem;
+    color: #fff;
+}
+.top-design-card{
+    display: flex;
+    position: absolute;
+    width: 25%;
+    height: 6px;
+    top: 0px;
+    background-color: #000;
+}
+
+.top-design-card::before{
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    rotate: 45deg;
+    background-color:inherit;
+    z-index:2;
+    top: -3.8px;
+    left: -4px;
+}
+
+.top-design-card::after{
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    rotate: -45deg;
+    background-color:inherit;
+    z-index:2;
+    top: -3.8px;
+    right: -4px;
+}
+
+.grid-home{
+    display: flex;
+    gap: 10px;
+    margin: 100px 10px;
+}
