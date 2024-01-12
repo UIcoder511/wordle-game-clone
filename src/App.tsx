@@ -3,58 +3,48 @@ import React from "react";
 import "./App.css";
 import GridRow from "./components/GridRow/GridRow";
 import useWorddle from "./hooks/useWorddle";
-import Home from "./components/Home/Home";
+import Home, { WordLevelType } from "./components/Home/Home";
 import Button from "./ui/Button/Button";
 import MenuCard from "ui/MenuCard/MenuCard";
 import Tutorial from "staticUI/Tutorial/Tutorial";
 
-const CORRECT_WORD = "MIKASA"; // :)
+import words from "./data/words.json";
+import Game from "components/Game/Game";
 
 function App() {
   const {
+    word,
+    setWord,
     level,
     setLevel,
     gameState,
     currentPosition,
-    handleEnter: guessTheWord,
+    guessTheWord,
     isWon,
     canEnter,
-  } = useWorddle({ correctWord: CORRECT_WORD });
+    isGameFinished,
+  } = useWorddle();
+
+  const setRandomWord = (level: WordLevelType) => {
+    setWord(words[level][0].toUpperCase());
+    setLevel(level);
+  };
 
   return (
     <div className="App">
-      <Tutorial />
-      {/* {
-      // !isStarted ?<Home setIsStarted={setIsStarted}  />:
-      !gameState ?<Home setLevel={setLevel}  />:
-      <>
-       <div className="main-container">
-       {Array(6)
-          .fill("")
-          .map((_, index) => (
-            <GridRow
-              key={index}
-              data={gameState?.[index].data}
-              isFixed={gameState?.[index].isFixed}
-              wordToGuess={CORRECT_WORD}
-              level={level}
-            />
-          ))}
-        
-      
-      </div>
-      <footer>
-        <Button
-          disabled={!canEnter}
-          onClick={guessTheWord}
-          btnType="try"
-        >
-          TRY IT
-        </Button>
-      </footer>
-   
-      </>
-} */}
+      {!gameState ? (
+        <Home setLevel={setRandomWord} />
+      ) : (
+        <Game
+          gameState={gameState}
+          level={level}
+          word={word}
+          canEnter={canEnter}
+          guessTheWord={guessTheWord}
+          isGameFinished={isGameFinished}
+          isWon={isWon}
+        />
+      )}
     </div>
   );
 }

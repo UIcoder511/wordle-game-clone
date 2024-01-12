@@ -1,9 +1,14 @@
+import { animated, useSpring } from "@react-spring/web";
 import GridRowCell, {
   GridRowCellStatus,
+  statusToColor,
 } from "components/GridRow/GridRowCell/GridRowCell";
-import React from "react";
-import { styled } from "stitches.config";
+import React, { useRef } from "react";
+import { styled, theme } from "stitches.config";
+import GridButton from "ui/GridButton/GridButton";
 import MenuCard from "ui/MenuCard/MenuCard";
+
+const AnimatedMenuCard = animated(MenuCard);
 
 interface TUTORIAL_DATA_TYPE {
   [key: string]: {
@@ -35,6 +40,19 @@ const TUTORIAL_DATA: TUTORIAL_DATA_TYPE = {
 };
 
 const Tutorial = () => {
+  const [styles] = useSpring(() => ({
+    from: {
+      scale: 0.8,
+    },
+    to: {
+      scale: 1,
+    },
+    config: {
+      tension: 150,
+      friction: 10,
+    },
+  }));
+
   const P = styled("p", {
     fontSize: "1rem",
     fontWeight: 800,
@@ -45,23 +63,27 @@ const Tutorial = () => {
   });
 
   return (
-    <MenuCard
+    <AnimatedMenuCard
       title="Tutorial"
       styles={{
         bodyWrapper: {
-          maxWidth: "400px",
+          maxWidth: "420px",
         },
         body: {
           padding: "40px 20px 20px",
         },
+        container: {
+          // minWidth: "50%",
+        },
       }}
+      style={{ ...styles }}
     >
       <P>{HEADING_TEXT}</P>
       {Object.keys(TUTORIAL_DATA).map((word: string) => {
         const { position, status, text } = TUTORIAL_DATA[word];
         return tutorialSection(word, position, status, text);
       })}
-    </MenuCard>
+    </AnimatedMenuCard>
   );
 };
 
@@ -93,9 +115,9 @@ const tutorialSection = (
     <Container>
       <Word>
         {word.split("").map((char, pos) => (
-          <GridRowCell
-            value={char}
-            status={pos + 1 === position ? status : ""}
+          <GridButton
+            key={pos}
+            // status={pos + 1 === position ? status : ""}
             styles={{
               gridCellContainer: {
                 width: "40px",
@@ -105,11 +127,14 @@ const tutorialSection = (
                 fontSize: "2rem",
                 borderBottomWidth: "4px",
                 borderRadius: "10px",
-                WebkitTextStroke: "1px #fff",
+                WebkitTextStroke: "1px #555",
+
+                ...(status && pos + 1 === position && statusToColor[status]),
               },
             }}
-            filled
-          />
+          >
+            {char}
+          </GridButton>
         ))}
       </Word>
 

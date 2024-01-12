@@ -2,6 +2,26 @@ import React, { FC, useEffect, useLayoutEffect } from "react";
 import "./GridRowCell.css";
 
 import { useSpring, animated, to } from "@react-spring/web";
+import GridButton from "ui/GridButton/GridButton";
+import { theme } from "stitches.config";
+
+export const statusToColor = {
+  incorrect: {
+    // color: theme.colors.incorrectShadow,
+    backgroundColor: theme.colors.incorrectBg,
+    borderBottomColor: theme.colors.incorrectShadow,
+  },
+  correct: {
+    // color: theme.colors.correctShadow,
+    backgroundColor: theme.colors.correctBg,
+    borderBottomColor: theme.colors.correctShadow,
+  },
+  "wrong-position": {
+    // color: theme.colors.wrongPositonShadow,
+    backgroundColor: theme.colors.wrongPositonBg,
+    borderBottomColor: theme.colors.wrongPositonShadow,
+  },
+};
 
 export type GridRowCellStatus = "wrong-position" | "correct" | "incorrect" | "";
 
@@ -15,12 +35,9 @@ interface GridRowCellProps {
   };
 }
 
-const GridRowCell: FC<GridRowCellProps> = ({
-  value = "",
-  status,
-  filled = false,
-  styles,
-}) => {
+const AnimatedGridButton = animated(GridButton);
+
+const GridRowCell: FC<GridRowCellProps> = ({ value = "", status, styles }) => {
   const [stylesSpring, api] = useSpring(() => ({
     scale: 1,
     borderBottomWidth: "3px",
@@ -54,30 +71,30 @@ const GridRowCell: FC<GridRowCellProps> = ({
 
   // }, [value])
 
-  if (filled) {
-    return (
-      <div
-        className="grid-cell-contianer"
-        style={{ ...styles?.gridCellContainer }}
-      >
-        <div
-          className={`grid-cell ${status} ${filled ? "filled" : ""}`}
-          style={{ ...styles?.gridCell }}
-        >
-          {value}
-        </div>
-      </div>
-    );
-  }
   return (
-    <div className="grid-cell-contianer">
-      <animated.div
-        style={{ ...stylesSpring }}
-        className={`grid-cell ${status} ${filled ? "filled" : ""}`}
-      >
-        {value}
-      </animated.div>
-    </div>
+    // <div className="grid-cell-contianer">
+    //   <animated.button
+    //     style={{ ...stylesSpring }}
+    //     className={`grid-cell ${status}`}
+    //   >
+    //     {value}
+    //   </animated.button>
+    // </div>
+    <AnimatedGridButton
+      style={{ ...stylesSpring }}
+      styles={{
+        gridCellContainer: {
+          ...styles?.gridCellContainer,
+        },
+        gridCell: {
+          ...styles?.gridCell,
+          ...(status && statusToColor[status]),
+        },
+      }}
+    >
+      {/* <animated.div className={`grid-cell ${status}`}>{value}</animated.div> */}
+      {value}
+    </AnimatedGridButton>
   );
 };
 

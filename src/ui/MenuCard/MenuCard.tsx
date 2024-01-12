@@ -11,6 +11,7 @@ type Props = {
     footer?: React.CSSProperties;
     bodyWrapper?: React.CSSProperties;
   };
+  style?: React.CSSProperties;
 };
 
 const MenuHeader = styled("div", {
@@ -23,7 +24,7 @@ const MenuHeader = styled("div", {
   padding: "10px 60px",
   position: "relative",
   width: "fit-content",
-  //  zIndex:1,
+  // zIndex: 1,
   "&::before": {
     content: "",
     position: "absolute",
@@ -39,19 +40,21 @@ const MenuHeader = styled("div", {
   },
 });
 const MenuBody = styled("div", {
-  width: "calc(100% - 2px)",
+  width: "calc(100% - 3px)",
   height: "calc(100% - 10px)",
   // position:'absolute',
-
+  zIndex: -1,
   borderRadius: "28px",
   background: "#fff",
   // marginTop: "-10px",
 });
 const MenuContainer = styled("div", {
   position: "absolute",
-
-  width: "100%",
-  height: "100%",
+  zIndex: 4,
+  // top: "50%",
+  // transform: "translateY(-50%)",
+  // minWidth: "0%",
+  // height: "100%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -107,7 +110,7 @@ const Footer = styled("div", {
   },
 });
 
-const MenuCard: React.FC<Props> = ({ title, children, styles }) => {
+const MenuCard: React.FC<Props> = ({ title, children, styles, style }) => {
   const [headerHeight, setHeaderHeight] = useState<number>(0);
 
   useLayoutEffect(() => {
@@ -116,7 +119,11 @@ const MenuCard: React.FC<Props> = ({ title, children, styles }) => {
 
   const titleRef = useRef<HTMLDivElement>(null);
   return (
-    <MenuContainer className="menu-container" css={{ ...styles?.container }}>
+    <MenuContainer
+      className="menu-container"
+      css={{ ...styles?.container }}
+      style={style}
+    >
       {/* <MenuHeaderWrapper ref={titleRef}> */}
       <MenuHeader ref={titleRef} css={{ ...styles?.header }}>
         {title}
@@ -126,7 +133,9 @@ const MenuCard: React.FC<Props> = ({ title, children, styles }) => {
         className="menu-body"
         css={{ marginTop: -headerHeight / 2, ...styles?.bodyWrapper }}
       >
-        <MenuBody css={{ ...styles?.body }}>{children}</MenuBody>
+        <MenuBody css={{ paddingTop: headerHeight / 2, ...styles?.body }}>
+          {children}
+        </MenuBody>
         <Footer className="menu-footer" css={{ ...styles?.footer }}></Footer>
       </MenuBodyWrapper>
     </MenuContainer>

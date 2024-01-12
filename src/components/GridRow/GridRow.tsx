@@ -2,30 +2,28 @@ import React, { FC } from "react";
 import GridRowCell from "./GridRowCell/GridRowCell";
 import "./GridRow.css";
 import { IWordState } from "../../hooks/useWorddle";
-import { animated, useSpring } from '@react-spring/web';
+import { animated, useSpring } from "@react-spring/web";
 
-interface GridRowProps extends IWordState{
-
+interface GridRowProps extends IWordState {
   wordToGuess: string;
-  level:number
-} 
+  level: number;
+}
 
-const GridRow:FC<GridRowProps> = ({ data, wordToGuess, isFixed,level }) => {
-
-  const [styles] =useSpring(()=>({
-    from:{
-      scale:0.8
+const GridRow: FC<GridRowProps> = ({ data, wordToGuess, isFixed, level }) => {
+  const [styles] = useSpring(() => ({
+    from: {
+      scale: 0.8,
     },
-    to:{
-      scale:1
+    to: {
+      scale: 1,
     },
-    config:{
-      tension:150,
-      friction:10
-    }
-  }))
+    config: {
+      tension: 150,
+      friction: 10,
+    },
+  }));
   return (
-    <animated.div className={"grid-row"} style={{...styles}}>
+    <animated.div className={"grid-row"} style={{ ...styles }}>
       {Array(level)
         .fill("")
         .map((_, index) => (
@@ -45,7 +43,6 @@ const GridRow:FC<GridRowProps> = ({ data, wordToGuess, isFixed,level }) => {
             }
           />
         ))}
-     
     </animated.div>
   );
 };
