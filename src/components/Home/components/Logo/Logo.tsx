@@ -1,7 +1,13 @@
 import React from "react";
-import { theme } from "stitches.config";
+import { styled, theme } from "stitches.config";
 import type * as Stitches from "@stitches/react";
 import GridButton from "ui/GridButton/GridButton";
+
+const Container = styled("div", {
+  display: "flex",
+  gap: "10px",
+  margin: "100px 10px",
+});
 
 const Logo = () => {
   const FilledGridButton: React.FC<{
@@ -22,7 +28,7 @@ const Logo = () => {
   );
 
   return (
-    <div className="grid-home">
+    <Container>
       <FilledGridButton value="W" />
       <FilledGridButton value="O" />
       <FilledGridButton value="R" />
@@ -50,7 +56,7 @@ const Logo = () => {
           borderBottomColor: theme.colors.wrongPositonShadow,
         }}
       />
-    </div>
+    </Container>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 import { styled } from "stitches.config";
 import type * as Stitches from "@stitches/react";
+import { CSS, SpringValues, animated } from "@react-spring/web";
 
 type GridButtonProps = {
   children?: React.ReactNode;
@@ -8,6 +9,8 @@ type GridButtonProps = {
     gridCellContainer?: React.CSSProperties | Stitches.CSS;
     gridCell?: React.CSSProperties | Stitches.CSS;
   };
+  isCellAnimated?: boolean;
+  cellSpringStyles?: typeof CSS;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const GridCellContainer = styled("button", {
@@ -38,9 +41,13 @@ const GridCell = styled("div", {
   transformOrigin: "bottom",
 });
 
+const AnimatedCell = animated(GridCell);
+
 const GridButton: React.FC<GridButtonProps> = ({
   children,
   styles,
+  isCellAnimated = false,
+  cellSpringStyles,
   ...restProps
 }) => {
   return (
@@ -49,7 +56,16 @@ const GridButton: React.FC<GridButtonProps> = ({
       disabled={restProps.disabled || !restProps.onClick}
       {...restProps}
     >
-      <GridCell css={{ ...styles?.gridCell }}>{children}</GridCell>
+      {isCellAnimated ? (
+        <AnimatedCell
+          style={{ ...cellSpringStyles }}
+          css={{ ...styles?.gridCell }}
+        >
+          {children}{" "}
+        </AnimatedCell>
+      ) : (
+        <GridCell css={{ ...styles?.gridCell }}>{children}</GridCell>
+      )}
     </GridCellContainer>
   );
 };

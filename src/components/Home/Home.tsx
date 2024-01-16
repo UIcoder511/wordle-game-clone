@@ -3,6 +3,7 @@ import "./Home.css";
 
 import Logo from "./components/Logo/Logo";
 import LevelCards from "./components/LevelCards/LevelCards";
+import { styled } from "stitches.config";
 
 export type WordLevelType = 4 | 5 | 6;
 
@@ -10,16 +11,19 @@ type HomeProps = {
   setLevel: (level: WordLevelType) => void;
 };
 
+const Container = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+});
+
 const Home: FC<HomeProps> = ({ setLevel }) => {
   return (
-    <div className="homescreen">
+    <Container>
       <Logo />
       <LevelCards onClick={(level) => setLevel(level)} />
-      <footer>
-        Design from Sabah Sarwar and Developed with{" "}
-        <span style={{ color: "red" }}>&#10084;</span> by Umang
-      </footer>
-    </div>
+    </Container>
   );
 };
 

@@ -14,23 +14,9 @@
   --correct-shadow: #36b101;
   --wrong-positon-bg: #fef572;
   --wrong-positon-shadow: #ff6100;
-  --gray:#727272;
+  --gray: #727272;
 
   /* -- */
-}
-
-.App {
-  z-index: 2;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-
-  align-items: center;
-  /* justify-content: center; */
-  flex-direction: column;
-  /* background: rgb(143,75,222); */
-background: linear-gradient(180deg, rgba(143,75,222,1) 0%, rgba(225,171,203,1) 50%, rgba(137,163,237,1) 100%);
 }
 
 header {
@@ -49,4 +35,3 @@ footer {
   align-items: center;
   justify-content: center;
 }
-

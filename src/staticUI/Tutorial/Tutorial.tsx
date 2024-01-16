@@ -68,6 +68,7 @@ const Tutorial = () => {
       styles={{
         bodyWrapper: {
           maxWidth: "420px",
+          height: "60vh",
         },
         body: {
           padding: "40px 20px 20px",

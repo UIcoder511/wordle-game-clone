@@ -120,7 +120,7 @@ const MenuCard: React.FC<Props> = ({ title, children, styles, style }) => {
   const titleRef = useRef<HTMLDivElement>(null);
   return (
     <MenuContainer
-      className="menu-container"
+      // className="menu-container"
       css={{ ...styles?.container }}
       style={style}
     >
@@ -130,13 +130,13 @@ const MenuCard: React.FC<Props> = ({ title, children, styles, style }) => {
       </MenuHeader>
       {/* </MenuHeaderWrapper> */}
       <MenuBodyWrapper
-        className="menu-body"
+        // className="menu-body"
         css={{ marginTop: -headerHeight / 2, ...styles?.bodyWrapper }}
       >
         <MenuBody css={{ paddingTop: headerHeight / 2, ...styles?.body }}>
           {children}
         </MenuBody>
-        <Footer className="menu-footer" css={{ ...styles?.footer }}></Footer>
+        <Footer css={{ ...styles?.footer }}></Footer>
       </MenuBodyWrapper>
     </MenuContainer>
   );

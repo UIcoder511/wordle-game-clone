@@ -1,6 +1,7 @@
 import { SpringValue, animated, useSpring } from "@react-spring/web";
 import React, { FC, useEffect } from "react";
 import { styled, theme } from "stitches.config";
+import Button from "ui/Button/Button";
 import GridButton from "ui/GridButton/GridButton";
 import MenuCard from "ui/MenuCard/MenuCard";
 
@@ -35,12 +36,19 @@ const Word = styled("div", {
 interface ResultType {
   isWon: boolean;
   word: string;
+  setNextWord: () => void;
+  backToHomeHandler: () => void;
 }
 
 const AnimatedMenuCard = animated(MenuCard);
 const AnimatedContainer = animated(Container);
 
-const Result: FC<ResultType> = ({ isWon, word }) => {
+const Result: FC<ResultType> = ({
+  isWon,
+  word,
+  setNextWord,
+  backToHomeHandler,
+}) => {
   const [styles, api] = useSpring(() => ({
     from: {
       opacity: 0,
@@ -49,6 +57,10 @@ const Result: FC<ResultType> = ({ isWon, word }) => {
     to: {
       opacity: 1,
       transform: "scale(1)",
+    },
+    config: {
+      tension: 150,
+      friction: 10,
     },
   }));
   const springOpacity = new SpringValue(0);
@@ -66,7 +78,7 @@ const Result: FC<ResultType> = ({ isWon, word }) => {
         styles={{
           body: {
             width: "300px",
-            height: "180px",
+            // height: "180px",
             paddingLeft: "20px",
             paddingRight: "20px",
             // gap: "5px",
@@ -75,6 +87,7 @@ const Result: FC<ResultType> = ({ isWon, word }) => {
           },
           bodyWrapper: {
             // width:
+            height: "400px",
           },
           header: {
             padding: "10px 30px",
@@ -107,7 +120,20 @@ const Result: FC<ResultType> = ({ isWon, word }) => {
             </GridButton>
           ))}
         </Word>
-        {/* <Button btnType="try">Re-try</Button> */}
+        <Button
+          btnType="try"
+          onClick={setNextWord}
+          styles={{ marginTop: "20px" }}
+        >
+          Next Word
+        </Button>
+        <Button
+          btnType="try"
+          onClick={backToHomeHandler}
+          styles={{ marginTop: "20px" }}
+        >
+          Home
+        </Button>
       </AnimatedMenuCard>{" "}
     </AnimatedContainer>
   );

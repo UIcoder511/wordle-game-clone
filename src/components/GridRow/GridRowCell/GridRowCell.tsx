@@ -81,7 +81,7 @@ const GridRowCell: FC<GridRowCellProps> = ({ value = "", status, styles }) => {
     //   </animated.button>
     // </div>
     <AnimatedGridButton
-      style={{ ...stylesSpring }}
+      style={{ scale: stylesSpring.scale }}
       styles={{
         gridCellContainer: {
           ...styles?.gridCellContainer,
@@ -91,6 +91,8 @@ const GridRowCell: FC<GridRowCellProps> = ({ value = "", status, styles }) => {
           ...(status && statusToColor[status]),
         },
       }}
+      cellSpringStyles={{ borderBottomWidth: stylesSpring.borderBottomWidth }}
+      isCellAnimated={true}
     >
       {/* <animated.div className={`grid-cell ${status}`}>{value}</animated.div> */}
       {value}
