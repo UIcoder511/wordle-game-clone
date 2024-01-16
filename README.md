@@ -1,5 +1,14 @@
 # Worddle clone
 
+## Preview
+https://worddle-web-app.netlify.app/
+
+## Tech Stack
+- ReactJS
+- TypeScript
+- Stiches (CSS in JS)
+- React-Spring (animations)
+
 > Design Reference : 
 https://www.behance.net/gallery/138525503/Wordle?tracking_source=search_projects%7Cwordle+game
 
