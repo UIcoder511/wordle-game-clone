@@ -9,10 +9,14 @@ https://worddle-web-app.netlify.app/
 - Stiches (CSS in JS)
 - React-Spring (animations)
 
+## What's Next:
+- 🔠 Onscreen keyboard for better accessibility
+- ✨ More captivating animations
+- 🔊 Engaging sound effects
+- 🧪 Comprehensive test cases to ensure seamless gameplay
+
 > Design Reference : 
 https://www.behance.net/gallery/138525503/Wordle?tracking_source=search_projects%7Cwordle+game
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
